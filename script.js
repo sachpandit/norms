@@ -1,3 +1,4 @@
+const alertElement = document.getElementById('alertItem');
 let images = [];
 let currentIndex = 0;
 let totalTimer;
@@ -5,9 +6,23 @@ let interval;
 
 document.getElementById('startTest').addEventListener('click', startTest);
 document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
+document.getElementById('questionTime').addEventListener('change',()=>hideAlert(alertElement))
 
+function showAlert(message,element){
+    element.innerHTML = message
+    element.classList.remove('hidden')
+    element.classList.add('show')
+    
+}
+function hideAlert(element){
+    element.innerHTML='error will show here.'
+    element.classList.remove('show')
+    element.classList.add('hidden')
+
+}
 function handleImageUpload(event) {
     images = [];
+    if(event.target.files.length>0) hideAlert(alertElement)
     for (let file of event.target.files) {
         let reader = new FileReader();
         reader.onload = function(e) {
@@ -20,7 +35,9 @@ function handleImageUpload(event) {
 function startTest() {
     const questionTime = parseInt(document.getElementById('questionTime').value);
     if (isNaN(questionTime) || images.length === 0) {
-        alert('Please upload images and enter a valid time per question.');
+        console.log(alertElement);
+        showAlert('Please upload images and enter a valid time per question.',alertElement)
+        // alert('Please upload images and enter a valid time per question.');
         return;
     }
     totalTimer = images.length * questionTime;
@@ -73,9 +90,10 @@ function formatTime(seconds) {
 
 function endTest() {
     clearInterval(interval);
-    alert('End of test');
+    // alert('End of test');
+    showAlert('End of Test',alertElement);
     document.querySelector('.test-section').style.display = 'none';
-    document.querySelector('.upload-section').style.display = 'flex';
+    document.querySelector('.upload-section').style.display = 'block';
     document.getElementById('imageUpload').value = '';
     document.getElementById('questionTime').value = '';
     document.getElementById('timer').textContent = '';

@@ -8,9 +8,14 @@
 </head>
 <body>
     <div class="container">
+        <div id="alertItem" class="alert hidden">
+            Error Message will Show 
+         
+        </div>
         <div class="upload-section">
             <input type="file" id="imageUpload" multiple accept="image/*">
-            <input type="number" id="questionTime" placeholder="Time per question (seconds)">
+            <label for="questionTime">Time per question (in sec)</label>
+            <input value="30" type="number" id="questionTime" placeholder="Time per question (seconds)">
             <button id="startTest">Start Test</button>
         </div>
 
